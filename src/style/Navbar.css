@@ -1,0 +1,113 @@
+.navbar{
+    
+    padding: 10px 15px;
+}
+
+.navbar-top{
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar-bottom{
+    display: flex;
+}
+
+.logo{
+    width : 10%
+}
+
+
+.bookmark-category-container{
+    display: flex;
+    font-weight: 500;
+}
+
+
+.bookmark-button{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 20px;
+}
+
+
+.category-button{
+    margin-top: auto;
+    margin-bottom: auto;
+    cursor: pointer;
+}
+
+.arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    margin-left: 10px;
+    transition: 0.5s;
+}
+
+.up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+/*.category-list-container{
+    flex-wrap: wrap;
+}
+
+.appear{
+    display: flex;
+    transition: all 0.5s ease-in;
+    
+    opacity: 1;
+}
+
+.hidden{
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+}*/
+
+.category-list-container{
+    flex-wrap: wrap;
+}
+
+.appear{
+    display: flex;
+    transition: all 0.5s ease-in;
+    opacity: 1;
+    height: 40vh;
+}
+
+.hidden{
+    transition: height 0.5s ease-in;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.category-element{
+    width: 100px;
+    text-align: center;
+    padding: 10px 0px;
+    margin : 10px;
+    border: 1px solid rgb(124, 124, 124);
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+  
+.category-element:hover{
+    opacity: 1;
+    
+    font-weight: 600;
+    border: 1px solid white;
+    /*background-color: #53a7ea;*/
+    background-color: black;
+    color: white;
+}
