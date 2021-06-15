@@ -14,7 +14,7 @@ class Navbar extends React.Component {
 
     /*componentDidMount(){
         this.setState({
-            categories : this.props.categoriesList
+            categories : this.props.categoryList
         })
     }
     
@@ -24,14 +24,14 @@ class Navbar extends React.Component {
     */
 
     componentDidUpdate() {
-        if(this.state.categories !== this.props.categoriesList) {
-          this.setState({categories: this.props.categoriesList});
+        if(this.state.categories !== this.props.categoryList) {
+          this.setState({categories: this.props.categoryList});
         }
       }
 
     renderListOfCategory = () => {
         return(
-            this.props.categoriesList.map((category, index) => {
+            this.props.categoryList.map((category, index) => {
                 return(
                     <div key = {index} className = "category-element">{category.name}</div>
                 )
@@ -48,13 +48,13 @@ class Navbar extends React.Component {
     }
 
     render(){
-        console.log("from navbar props")
-        console.log(this.props.categoriesList)
+        /*console.log("from navbar props")
+        console.log(this.props.categoryList)
         
         console.log("from navbar state")
         console.log(this.state.categories)
 
-        console.log("isShowCategory : " + this.state.isShowCategory);
+        console.log("isShowCategory : " + this.state.isShowCategory);*/
         return(
             <div className = "navbar">
                 <div className = "navbar-top">
