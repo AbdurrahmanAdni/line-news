@@ -1,30 +1,10 @@
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import Navbar from '../src/component/Navbar.js';
 import PageBody from '../src/component/PageBody.js';
+import Bookmark from '../src/component/Bookmark.js';
 import Footer from '../src/component/Footer.js';
 import './App.css';
-import React from 'react';
-
-/*
-this.state.allData.map((dataElmt, index) => {
-            let dataTemplate = dataElmt.templates;
-            //Ambil category -> dataElmt.name
-            dataTemplate.map((templateElmt, index) => {
-              if(templateElmt.title != null){
-                let templateSection = templateElmt.sections;
-
-                templateSection.map((sectionElmt, index) => {
-                  //let sectionArticles = templateSection.articles;
-
-                  if(sectionElmt.articles.length !== 0){
-                    console.log("Categori : " + dataElmt.name);
-                    console.log("categori title : " + templateElmt.title)
-                    console.log("sectionElmt.articles : " + sectionElmt.articles.length)
-                  }
-                })
-              }
-            })
-          })
-*/
 
 class App extends React.Component {
 
@@ -32,16 +12,15 @@ class App extends React.Component {
     super(props);
     
     this.state = {
-      scrolled : false,
       error: null,
       isLoaded: false,
-      nowCategory : "TOP",
+      selectedCategory : "TOP",
       allData: [],
       categoryList : [],
-      //esentialData : [],
+      bookmarked : []
     }
-  }
-  
+}
+
   componentDidMount() {
 
     fetch("https://today.line.me/id/portaljson")
@@ -65,86 +44,83 @@ class App extends React.Component {
           });
         }
       )
+
+      this.setState({bookmarked : JSON.parse(localStorage.getItem('bookmarkData'))})
     
   }
 
-  renderArticle = () => {
-    if(this.state.isLoaded){
-      /*return(  
-        console.log("dari function"),
-        console.log(this.state.allData),
-        console.log(this.state.isLoaded)
-        this.state.allData.map((dataElmt, index) => {
-          return(
-            <div>{dataElmt.name}</div>
-          )
-        })
-      )*/
-      return(
-        this.state.allData.map((dataElmt, index) => {
-          //let dataTemplate = dataElmt.templates
-          return(
-            dataElmt.templates.map((templateElmt, index) => {
-              return(
-                templateElmt.sections.map((sectionElmt, index) => {
-                  if((sectionElmt.articles.length !== 0) && (sectionElmt.articles[0].source !== "AD")){
-                    return(
-                      sectionElmt.articles.map((article, index) => {
-                        if((article.thumbnail != null) && (article.url != null)){
-                          return(
-                            <div key = {index} className = "news-card">
-                              <div>{dataElmt.name}</div>
-                            </div>
-                          )
-                        }
-                      })
-                    )
-                  }
-                })
-              )
-              /*return(
-                <div  key = {index}>
-                  <div>{templateElmt.id}</div>
-                </div>
-              )*/
-            })
-            /*<div>
-              <div key = {index}>{dataElmt.id}</div>
-            </div>*/
-            /*dataTemplate.map((templateElmt, index) => {
-              let templateSection = templateElmt.sections;
-              templateSection.map((sectionElmt, index) => {
-                if((sectionElmt.articles.length !== 0) && (sectionElmt.articles[0].source !== "AD")){
-                  return(
-                    <div>
-                      <div>{dataElmt.name}</div>
-                      <div>{templateElmt.title}</div>
-                    </div>
-                  )
-                }
-              })
-            })*/
-          )
-          
-        })
-      )
+  
+  componentDidUpdate() {
+    if(JSON.parse(localStorage.getItem('bookmarkData')) !== this.state.bookmarked){
+      localStorage.setItem('bookmarkData', JSON.stringify(this.state.bookmarked));
     }
   }
 
+  
+  changeCategory(category){
+    if(this.state.selectedCategory !== category){
+      this.setState({
+        selectedCategory : category
+      })
+    }
+  }
+
+  addBookmark(id){
+    if(!(this.state.bookmarked.indexOf(id) > -1)){
+      this.setState({
+        bookmarked:[...this.state.bookmarked, id]
+      });
+    }
+  }
+
+  deleteFromBookmark(id){
+    var bookmarkList = this.state.bookmarked;
+    var toRemove = id;
+    var index = bookmarkList.indexOf(toRemove);
+
+    if(index > -1){
+      bookmarkList.splice(index, 1);
+    }
+
+    this.setState({bookmarked : bookmarkList});
+  }
+
+  
   render(){
-    console.log("isLoaded " + this.state.isLoaded);
-    console.log("allData");
-    console.log(this.state.allData);
-    console.log("categoryList");
-    console.log(this.state.categoryList);
-    console.log("esential data");
-    console.log(this.state.esentialData);
+    console.log("Bookmark id")
+    console.log(this.state.bookmarked);
+    console.log("Bookmark localStorage")
+    console.log(localStorage.getItem('bookmarkData'));
     return (
       <div className="App">
         <div className = "App-body">
-          <Navbar categoryList = {this.state.categoryList}/>
-          <PageBody />
-          <div>{this.renderArticle()}</div>
+          <Navbar 
+            categoryList = {this.state.categoryList} 
+            selectedCategory = {this.state.selectedCategory} 
+            changeCategory = {this.changeCategory.bind(this)}/>
+
+          <Switch>
+
+            <Route exact path = "/" >
+              <PageBody
+                isLoaded = {this.state.isLoaded}
+                allData = {this.state.allData} 
+                selectedCategory = {this.state.selectedCategory}
+                bookmarked = {this.state.bookmarked}
+                addBookmark = {this.addBookmark.bind(this)}
+                deleteFromBookmark = {this.deleteFromBookmark.bind(this)}/>
+            </Route>
+
+            <Route exact path = "/bookmark" >
+              <Bookmark
+                allData = {this.state.allData}
+                deleteFromBookmark = {this.deleteFromBookmark.bind(this)}
+                bookmarked = {this.state.bookmarked}/>
+            </Route>
+            
+          </Switch>
+          
+
           <Footer />
         </div>
       </div>

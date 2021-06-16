@@ -8,6 +8,7 @@ class Navbar extends React.Component {
         super(props);
         this.state = {
             categories : [],
+            selectedCategory : "TOP",
             isShowCategory : false
         }
     }
@@ -25,15 +26,29 @@ class Navbar extends React.Component {
 
     componentDidUpdate() {
         if(this.state.categories !== this.props.categoryList) {
-          this.setState({categories: this.props.categoryList});
+            this.setState({categories: this.props.categoryList});
         }
-      }
+
+        if(this.state.selectedCategory !== this.props.selectedCategory) {
+            this.setState({selectedCategory: this.props.selectedCategory});
+        }
+    }
+
+    changeCat(category){
+        this.props.changeCategory(category);
+    }
 
     renderListOfCategory = () => {
         return(
             this.props.categoryList.map((category, index) => {
                 return(
-                    <div key = {index} className = "category-element">{category.name}</div>
+                    <div 
+                        key = {index} 
+                        onClick = { () => this.changeCat(category.name)} 
+                        className = {this.state.selectedCategory === category.name ? "category-element active" : "category-element"}>
+                            {category.name}
+                        
+                    </div>
                 )
             })
         )
@@ -48,24 +63,24 @@ class Navbar extends React.Component {
     }
 
     render(){
-        /*console.log("from navbar props")
-        console.log(this.props.categoryList)
-        
-        console.log("from navbar state")
-        console.log(this.state.categories)
-
-        console.log("isShowCategory : " + this.state.isShowCategory);*/
         return(
             <div className = "navbar">
                 <div className = "navbar-top">
-                    <div className = "logo"><img src = {Logo} alt = "Logo" style = {{width : "50px"}}/></div>
+                    <a href = "/" className = "logo"><img src = {Logo} alt = "Logo" style = {{width : "50px"}}/></a>
                     
                     <div className = "bookmark-category-container">
-                        <div className = "bookmark-button">My Bookmark</div>
-                        <div className = "category-button" onClick = {this.showCategory.bind(this)}>
+
+                        <a href = "/bookmark" className = "bookmark-button" style = {{display : window.location.pathname !== "/bookmark" ? "inline-block" : "none"}}>My Bookmark</a>
+                        <a href = "/" className = "bookmark-button" style = {{display : window.location.pathname === "/bookmark" ? "inline-block" : "none"}}>Back To Home</a>
+
+                        <div 
+                            style = {{display : window.location.pathname !== "/bookmark" ? "inline-block" : "none"}}
+                            className = "category-button" 
+                            onClick = {this.showCategory.bind(this)}>
                             Kategory
                             <i className= {this.state.isShowCategory ? "arrow down" : "arrow up"}></i>
-                        </div>                   
+                        </div>  
+
                     </div>
                 </div>
                 <div className = "navbar-bottom">

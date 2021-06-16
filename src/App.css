@@ -2,18 +2,17 @@
   display: flex;
   justify-content: center;
   min-height: 100vh;
-  background-color: rgb(212, 212, 212);
+  background-color: rgb(241, 241, 241);
 }
 
 .App-body{
   background-color: white;
   width: 768px;
   max-width: 768px;
+  padding: 10px 15px;
 }
 
-.news-card{
-  background-color: red;
-}
+
 /*
 .App-header {
   background-color: #282c34;
