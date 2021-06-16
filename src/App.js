@@ -87,10 +87,6 @@ class App extends React.Component {
 
   
   render(){
-    console.log("Bookmark id")
-    console.log(this.state.bookmarked);
-    console.log("Bookmark localStorage")
-    console.log(localStorage.getItem('bookmarkData'));
     return (
       <div className="App">
         <div className = "App-body">

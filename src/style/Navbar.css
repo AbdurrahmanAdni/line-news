@@ -85,7 +85,7 @@
     display: flex;
     transition: all 0.5s ease-in;
     opacity: 1;
-    height: 40vh;
+    height: 44vh;
 }
 
 .hidden{
@@ -137,12 +137,22 @@
     
 }
 
+@media screen and (max-width: 656px) {
+    .appear{
+        display: flex;
+        transition: all 0.5s ease-in;
+        opacity: 1;
+        height: 70vh;
+    }
+    
+}
+
 @media screen and (max-width: 535px) {
     .appear{
         display: flex;
         transition: all 0.5s ease-in;
         opacity: 1;
-        height: 80vh;
+        height: 90vh;
     }
     
 }

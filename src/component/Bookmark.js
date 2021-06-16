@@ -12,11 +12,6 @@ class Bookmark extends React.Component {
     }
   }
 
-  /*componentDidMount(){
-    var getBookmark = localStorage.getItem('bookmarkData');
-    this.setState({bookmarked: JSON.parse(getBookmark)});
-  }*/
-
   componentDidUpdate() {
       if(this.state.bookmarked !== this.props.bookmarked) {
           this.setState({bookmarked: this.props.bookmarked});
@@ -79,9 +74,6 @@ class Bookmark extends React.Component {
   }
     
   render(){
-      console.log("Bookmarked Page");
-      //console.log(localStorage.getItem('bookmarkData'));
-      console.log(this.state.bookmarked);
       return (
       <div className = "bookmark-page">{this.renderBookmarkedArticle()}</div>
     );

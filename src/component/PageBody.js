@@ -14,11 +14,6 @@ class PageBody extends React.Component {
         }
     }
 
-    /*componentDidMount(){
-        var selectedCat = this.props.match.params.category;
-        console.log(selectedCat);
-    }*/
-
     componentDidUpdate() {
         if(this.state.isLoaded !== this.props.isLoaded) {
             this.setState({isLoaded: this.props.isLoaded});
@@ -125,9 +120,6 @@ class PageBody extends React.Component {
     }
 
     render(){
-        console.log("isLoaded " + this.state.isLoaded);
-        console.log("allData");
-        console.log(this.state.allData);
         return(
             <div className = "body">
                 <div className = "TITLE">{this.state.selectedCategory}</div>
